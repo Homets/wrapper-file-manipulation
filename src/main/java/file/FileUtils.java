@@ -1,8 +1,6 @@
 package file;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Scanner;
 import java.lang.IllegalArgumentException;
 
@@ -28,6 +26,7 @@ public class FileUtils {
         }
         return null;
     }
+
     //0 in lineNumber return all the file
     public static String readFileString(String file, int lineNumber){
         String fileConcatenated = "";
@@ -52,7 +51,8 @@ public class FileUtils {
         }
         return null;
     }
-    public static boolean writeString(String file, String stringToWrite ){
+
+    public static void writeString(String file, String stringToWrite ){
         if (stringToWrite.isEmpty()){
             throw new IllegalArgumentException("string argument is empty");
         }
@@ -60,15 +60,21 @@ public class FileUtils {
             File fileToWrite = new File(file);
             PrintWriter printWriter = new PrintWriter(fileToWrite);
             printWriter.write(stringToWrite);
-
             printWriter.close();
-            //printWriter.print();
-            return true;
         } catch (FileNotFoundException e){
             System.out.println(e.fillInStackTrace());
         }
+    }
 
-        return false;
+    public static void appendString(String file, String stringToAppend) throws IOException {
+        try {
+            File fileToRead = new File(file);
+            FileWriter fileWriter = new FileWriter(fileToRead, true);
+            fileWriter.append(stringToAppend);
+            fileWriter.close();
+        } catch (IOException e){
+            throw new IOException("Cannot open you're file");
+        }
     }
 
 }
