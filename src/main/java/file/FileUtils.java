@@ -2,7 +2,9 @@ package file;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Scanner;
+import java.lang.IllegalArgumentException;
 
 /*************************************************
  *    Wrapper for file manipulation function     *
@@ -12,7 +14,7 @@ public class FileUtils {
 
     }
 
-    public char[] readFileChar(String file){
+    public static char[] readFileChar(String file){
         String fileReaded = "";
         File inputFile = new File(file);
         try {
@@ -26,9 +28,8 @@ public class FileUtils {
         }
         return null;
     }
-
     //0 in lineNumber return all the file
-    public String readFileString(String file, int lineNumber){
+    public static String readFileString(String file, int lineNumber){
         String fileConcatenated = "";
         int lineCount = 0;
         try {
@@ -40,17 +41,34 @@ public class FileUtils {
                 }
                 return fileConcatenated;
             } else {
-                while (textParser.hasNextLine() && lineCount < lineNumber ){
+                while (textParser.hasNextLine() && lineCount < lineNumber ) {
                     fileConcatenated += textParser.nextLine();
                     lineCount++;
                 }
-                System.out.println(fileConcatenated);
                 return fileConcatenated;
             }
-
         } catch (FileNotFoundException e){
             System.out.println(e.fillInStackTrace());
         }
         return null;
     }
+    public static boolean writeString(String file, String stringToWrite ){
+        if (stringToWrite.isEmpty()){
+            throw new IllegalArgumentException("string argument is empty");
+        }
+        try {
+            File fileToWrite = new File(file);
+            PrintWriter printWriter = new PrintWriter(fileToWrite);
+            printWriter.write(stringToWrite);
+
+            printWriter.close();
+            //printWriter.print();
+            return true;
+        } catch (FileNotFoundException e){
+            System.out.println(e.fillInStackTrace());
+        }
+
+        return false;
+    }
+
 }
