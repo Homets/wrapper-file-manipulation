@@ -66,7 +66,35 @@ public class FileUtils {
         }
     }
 
-    public static void appendString(String file, String stringToAppend) throws IOException {
+    public static void append(String file, String string) throws IOException {
+        try {
+            File fileToRead = new File(file);
+            FileWriter fileWriter = new FileWriter(fileToRead, true);
+            fileWriter.append(string);
+            fileWriter.close();
+        } catch (IOException e){
+            throw new IOException("Cannot open you're file");
+        }
+    }
+
+    //charbuf
+    public static void append(String file, char[] charbuf) throws IOException {
+        try {
+            String stringToAppend = "";
+            File fileToRead = new File(file);
+            FileWriter fileWriter = new FileWriter(fileToRead, true);
+            for (Character c : charbuf){
+                stringToAppend += c;
+            }
+            fileWriter.append(stringToAppend);
+            fileWriter.close();
+        } catch (IOException e){
+            throw new IOException("Cannot open you're file");
+        }
+    }
+
+    public static void append(String file, int integer) throws IOException {
+        String stringToAppend = String.valueOf(integer);
         try {
             File fileToRead = new File(file);
             FileWriter fileWriter = new FileWriter(fileToRead, true);
@@ -75,6 +103,8 @@ public class FileUtils {
         } catch (IOException e){
             throw new IOException("Cannot open you're file");
         }
+
+
     }
 
 }

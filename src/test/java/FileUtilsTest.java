@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.DisplayName;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class FileUtilsTest {
@@ -78,12 +77,45 @@ public class FileUtilsTest {
         assertThrows(IllegalArgumentException.class, () -> {
             FileUtils.writeString("src/test/fileResources/appendFile", "");
         });
-        FileUtils.appendString("src/test/fileResources/appendFile", " and append");
+        FileUtils.append("src/test/fileResources/appendFile", " and append");
         fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile",0);
         assertEquals(16, fileReaded.length());
 
     }
 
+    @Order(5)
+    @Tag("write")
+    @DisplayName("Append char buffer to a file")
+    @Test
+    void appendStringWithCharBuf() throws IOException {
+        FileUtils.writeString("src/test/fileResources/appendFile", "write");
+        String fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile",0);
+        assertEquals(5, fileReaded.length());
+        assertThrows(IllegalArgumentException.class, () -> {
+            FileUtils.writeString("src/test/fileResources/appendFile", "");
+        });
+        char[] charbuf = {' ', 'a','n','d',' ','a','p','p','e','n','d'};
+        FileUtils.append("src/test/fileResources/appendFile", charbuf);
+        fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile",0);
+        assertEquals(16, fileReaded.length());
+
+    }
+    @Order(6)
+    @Tag("write")
+    @DisplayName("Append integer to a file")
+    @Test
+    void appendStringWithInteger() throws IOException {
+        FileUtils.writeString("src/test/fileResources/appendFile", "write");
+        String fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile",0);
+        assertEquals(5, fileReaded.length());
+        assertThrows(IllegalArgumentException.class, () -> {
+            FileUtils.writeString("src/test/fileResources/appendFile", "");
+        });
+        FileUtils.append("src/test/fileResources/appendFile", 65);
+        fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile",0);
+        assertEquals(7, fileReaded.length());
+
+    }
 
 
 }
