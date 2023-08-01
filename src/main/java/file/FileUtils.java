@@ -20,6 +20,7 @@ public class FileUtils {
             while (textParser.hasNextLine()){
                 fileReaded += textParser.nextLine();
             }
+            textParser.close();
             return fileReaded.toCharArray();
         } catch (FileNotFoundException e){
             System.out.println(e.fillInStackTrace());
@@ -38,12 +39,14 @@ public class FileUtils {
                 while (textParser.hasNextLine()){
                     fileConcatenated += textParser.nextLine();
                 }
+                textParser.close();
                 return fileConcatenated;
             } else {
                 while (textParser.hasNextLine() && lineCount < lineNumber ) {
                     fileConcatenated += textParser.nextLine();
                     lineCount++;
                 }
+                textParser.close();
                 return fileConcatenated;
             }
         } catch (FileNotFoundException e){
@@ -52,10 +55,40 @@ public class FileUtils {
         return null;
     }
 
-    public static void writeString(String file, String stringToWrite ){
+    public static void write(String file, String stringToWrite ){
         if (stringToWrite.isEmpty()){
             throw new IllegalArgumentException("string argument is empty");
         }
+        try {
+            File fileToWrite = new File(file);
+            PrintWriter printWriter = new PrintWriter(fileToWrite);
+            printWriter.write(stringToWrite);
+            printWriter.close();
+        } catch (FileNotFoundException e){
+            System.out.println(e.fillInStackTrace());
+        }
+    }
+
+    public static void write(String file, char[] charbuf ){
+        String stringToWrite = "";
+        if (charbuf.length == 0){
+            throw new IllegalArgumentException("string argument is empty");
+        }
+        for (char character : charbuf){
+            stringToWrite += character;
+        }
+        try {
+            File fileToWrite = new File(file);
+            PrintWriter printWriter = new PrintWriter(fileToWrite);
+            printWriter.write(stringToWrite);
+            printWriter.close();
+        } catch (FileNotFoundException e){
+            System.out.println(e.fillInStackTrace());
+        }
+    }
+
+    public static void write(String file, int integer ){
+        String stringToWrite = String.valueOf(integer);
         try {
             File fileToWrite = new File(file);
             PrintWriter printWriter = new PrintWriter(fileToWrite);
@@ -100,6 +133,18 @@ public class FileUtils {
             FileWriter fileWriter = new FileWriter(fileToRead, true);
             fileWriter.append(stringToAppend);
             fileWriter.close();
+        } catch (IOException e){
+            throw new IOException("Cannot open you're file");
+        }
+
+
+    }
+
+    public static void clean(String file) throws IOException {
+        try {
+            File fileToRead = new File(file);
+            PrintWriter pw = new PrintWriter(file);
+            pw.close();
         } catch (IOException e){
             throw new IOException("Cannot open you're file");
         }

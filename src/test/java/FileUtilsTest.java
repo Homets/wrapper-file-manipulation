@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Tag;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.DisplayName;
@@ -55,27 +56,51 @@ public class FileUtilsTest {
 
     @Order(3)
     @Tag("write")
-    @DisplayName("delete all content of a file and write to it")
+    @DisplayName("delete all content of a file and write string to it")
     @Test
     void writeString(){
-        FileUtils.writeString("src/test/fileResources/writeFile", "write");
+        FileUtils.write("src/test/fileResources/writeFile", "write");
         String fileReaded = FileUtils.readFileString("src/test/fileResources/writeFile",0);
         assertEquals(5, fileReaded.length());
         assertThrows(IllegalArgumentException.class, () -> {
-            FileUtils.writeString("src/test/fileResources/writeFile", "");
+            FileUtils.write("src/test/fileResources/writeFile", "");
+        });
+    }
+    @Order(4)
+    @Tag("write")
+    @DisplayName("delete all content of a file and write charbuf to it")
+    @Test
+    void writeStringWithCharArray(){
+        char[] charbuf = {'w','r','i','t','e'};
+        FileUtils.write("src/test/fileResources/writeFile", charbuf);
+        String fileReaded = FileUtils.readFileString("src/test/fileResources/writeFile",0);
+        assertEquals(5, fileReaded.length());
+        char[] emptyCharArray = {};
+        assertThrows(IllegalArgumentException.class, () -> {
+            FileUtils.write("src/test/fileResources/writeFile", emptyCharArray);
         });
     }
 
-    @Order(4)
+    @Order(5)
+    @Tag("write")
+    @DisplayName("delete all content of a file and write integer to it")
+    @Test
+    void writeStringWithInteger(){
+        FileUtils.write("src/test/fileResources/writeFile", 92);
+        String fileReaded = FileUtils.readFileString("src/test/fileResources/writeFile",0);
+        assertEquals(2, fileReaded.length());
+    }
+
+    @Order(6)
     @Tag("write")
     @DisplayName("Append string to a file")
     @Test
     void appendString() throws IOException {
-        FileUtils.writeString("src/test/fileResources/appendFile", "write");
+        FileUtils.write("src/test/fileResources/appendFile", "write");
         String fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile",0);
         assertEquals(5, fileReaded.length());
         assertThrows(IllegalArgumentException.class, () -> {
-            FileUtils.writeString("src/test/fileResources/appendFile", "");
+            FileUtils.write("src/test/fileResources/appendFile", "");
         });
         FileUtils.append("src/test/fileResources/appendFile", " and append");
         fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile",0);
@@ -83,16 +108,16 @@ public class FileUtilsTest {
 
     }
 
-    @Order(5)
+    @Order(7)
     @Tag("write")
     @DisplayName("Append char buffer to a file")
     @Test
     void appendStringWithCharBuf() throws IOException {
-        FileUtils.writeString("src/test/fileResources/appendFile", "write");
+        FileUtils.write("src/test/fileResources/appendFile", "write");
         String fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile",0);
         assertEquals(5, fileReaded.length());
         assertThrows(IllegalArgumentException.class, () -> {
-            FileUtils.writeString("src/test/fileResources/appendFile", "");
+            FileUtils.write("src/test/fileResources/appendFile", "");
         });
         char[] charbuf = {' ', 'a','n','d',' ','a','p','p','e','n','d'};
         FileUtils.append("src/test/fileResources/appendFile", charbuf);
@@ -100,22 +125,28 @@ public class FileUtilsTest {
         assertEquals(16, fileReaded.length());
 
     }
-    @Order(6)
+    @Order(8)
     @Tag("write")
     @DisplayName("Append integer to a file")
     @Test
     void appendStringWithInteger() throws IOException {
-        FileUtils.writeString("src/test/fileResources/appendFile", "write");
+        FileUtils.write("src/test/fileResources/appendFile", "write");
         String fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile",0);
         assertEquals(5, fileReaded.length());
-        assertThrows(IllegalArgumentException.class, () -> {
-            FileUtils.writeString("src/test/fileResources/appendFile", "");
-        });
         FileUtils.append("src/test/fileResources/appendFile", 65);
         fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile",0);
         assertEquals(7, fileReaded.length());
 
     }
 
-
+    @Order(9)
+    @Tag("clean")
+    @DisplayName("Clean a file")
+    @Test
+    void cleanFile() throws IOException {
+        FileUtils.write("src/test/fileResources/appendFile", "write");
+        FileUtils.clean("src/test/fileResources/appendFile");
+        String fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile", 0);
+        assertEquals(0, fileReaded.length());
+    }
 }
