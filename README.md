@@ -20,7 +20,7 @@ FileUtils.write(String filename, Integer integerToAppend);
 ```java
 FileUtils.append(String fileame,char[] charbuf);
 FileUtils.append(String fileame, String stringToAppend);
-FileUtils.write(String filename, Integer integerToAppend);
+FileUtils.append(String filename, Integer integerToAppend);
 ```
 ####.clean(String filename);
 ```java
