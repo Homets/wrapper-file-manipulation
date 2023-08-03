@@ -66,6 +66,7 @@ public class FileUtilsTest {
             FileUtils.write("src/test/fileResources/writeFile", "");
         });
     }
+
     @Order(4)
     @Tag("write")
     @DisplayName("delete all content of a file and write charbuf to it")
@@ -125,6 +126,7 @@ public class FileUtilsTest {
         assertEquals(16, fileReaded.length());
 
     }
+
     @Order(8)
     @Tag("write")
     @DisplayName("Append integer to a file")

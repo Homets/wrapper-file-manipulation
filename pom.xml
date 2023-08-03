@@ -7,12 +7,30 @@
     <groupId>com.fileutils</groupId>
     <artifactId>FileUtils</artifactId>
     <version>1.0</version>
+    <packaging>jar</packaging>
 
     <properties>
         <maven.compiler.source>20</maven.compiler.source>
         <maven.compiler.target>20</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <build>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.11.0</version>
+          <configuration>
+            <outputDirectory>../target</outputDirectory>
+            <includes>
+              <include>src/main/java/file/FileUtils.java</include>
+            </includes>
+          </configuration>
+        </plugin>
+      </plugins>
+    </build>
+
     <dependencies>
         <!-- Only needed to run tests in a version of IntelliJ IDEA that bundles older versions -->
         <dependency>
