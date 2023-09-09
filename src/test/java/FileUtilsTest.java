@@ -40,14 +40,15 @@ public class FileUtilsTest {
     @DisplayName("Read a file and return string array")
     @Test
     void readFileString(){
-        String fileReaded = FileUtils.readFileString("src/test/fileResources/baudelaireFile", 0);
+        String fileReaded = FileUtils.readFileString("src/test/fileResources/baudelaireFile");
         assertEquals(146, fileReaded.length());
         assertEquals('V',fileReaded.charAt(0));
         assertEquals(';',fileReaded.charAt(45));
         assertEquals('p',fileReaded.charAt(72));
         assertEquals('.',fileReaded.charAt(145));
 
-        fileReaded = FileUtils.readFileString("src/test/fileResources/gnuFile",1);
+        //We used function readFileString with lineNumber parameter
+        fileReaded = FileUtils.readFileString("src/test/fileResources/gnuFile", 1);
         assertEquals(138, fileReaded.length());
         assertEquals( 'T',fileReaded.charAt(0));
         assertEquals('w', fileReaded.charAt(37));
@@ -60,7 +61,7 @@ public class FileUtilsTest {
     @Test
     void writeString(){
         FileUtils.write("src/test/fileResources/writeFile", "write");
-        String fileReaded = FileUtils.readFileString("src/test/fileResources/writeFile",0);
+        String fileReaded = FileUtils.readFileString("src/test/fileResources/writeFile");
         assertEquals(5, fileReaded.length());
         assertThrows(IllegalArgumentException.class, () -> {
             FileUtils.write("src/test/fileResources/writeFile", "");
@@ -74,7 +75,7 @@ public class FileUtilsTest {
     void writeStringWithCharArray(){
         char[] charbuf = {'w','r','i','t','e'};
         FileUtils.write("src/test/fileResources/writeFile", charbuf);
-        String fileReaded = FileUtils.readFileString("src/test/fileResources/writeFile",0);
+        String fileReaded = FileUtils.readFileString("src/test/fileResources/writeFile");
         assertEquals(5, fileReaded.length());
         char[] emptyCharArray = {};
         assertThrows(IllegalArgumentException.class, () -> {
@@ -88,7 +89,7 @@ public class FileUtilsTest {
     @Test
     void writeStringWithInteger(){
         FileUtils.write("src/test/fileResources/writeFile", 92);
-        String fileReaded = FileUtils.readFileString("src/test/fileResources/writeFile",0);
+        String fileReaded = FileUtils.readFileString("src/test/fileResources/writeFile");
         assertEquals(2, fileReaded.length());
     }
 
@@ -98,13 +99,13 @@ public class FileUtilsTest {
     @Test
     void appendString() throws IOException {
         FileUtils.write("src/test/fileResources/appendFile", "write");
-        String fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile",0);
+        String fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile");
         assertEquals(5, fileReaded.length());
         assertThrows(IllegalArgumentException.class, () -> {
             FileUtils.write("src/test/fileResources/appendFile", "");
         });
         FileUtils.append("src/test/fileResources/appendFile", " and append");
-        fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile",0);
+        fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile");
         assertEquals(16, fileReaded.length());
 
     }
@@ -115,14 +116,14 @@ public class FileUtilsTest {
     @Test
     void appendStringWithCharBuf() throws IOException {
         FileUtils.write("src/test/fileResources/appendFile", "write");
-        String fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile",0);
+        String fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile");
         assertEquals(5, fileReaded.length());
         assertThrows(IllegalArgumentException.class, () -> {
             FileUtils.write("src/test/fileResources/appendFile", "");
         });
         char[] charbuf = {' ', 'a','n','d',' ','a','p','p','e','n','d'};
         FileUtils.append("src/test/fileResources/appendFile", charbuf);
-        fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile",0);
+        fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile");
         assertEquals(16, fileReaded.length());
 
     }
@@ -133,10 +134,10 @@ public class FileUtilsTest {
     @Test
     void appendStringWithInteger() throws IOException {
         FileUtils.write("src/test/fileResources/appendFile", "write");
-        String fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile",0);
+        String fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile");
         assertEquals(5, fileReaded.length());
         FileUtils.append("src/test/fileResources/appendFile", 65);
-        fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile",0);
+        fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile");
         assertEquals(7, fileReaded.length());
 
     }
@@ -148,7 +149,7 @@ public class FileUtilsTest {
     void cleanFile() throws IOException {
         FileUtils.write("src/test/fileResources/appendFile", "write");
         FileUtils.clean("src/test/fileResources/appendFile");
-        String fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile", 0);
+        String fileReaded = FileUtils.readFileString("src/test/fileResources/appendFile");
         assertEquals(0, fileReaded.length());
     }
 }

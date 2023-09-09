@@ -28,27 +28,40 @@ public class FileUtils {
         return null;
     }
 
-    //0 in lineNumber return all the file
-    public static String readFileString(String file, int lineNumber){
+    public static String readFileString(String file){
         String fileConcatenated = "";
-        int lineCount = 0;
         try {
             File fileToRead = new File(file);
             Scanner textParser = new Scanner(fileToRead);
-            if(lineNumber == 0){
-                while (textParser.hasNextLine()){
-                    fileConcatenated += textParser.nextLine();
-                }
-                textParser.close();
-                return fileConcatenated;
-            } else {
-                while (textParser.hasNextLine() && lineCount < lineNumber ) {
-                    fileConcatenated += textParser.nextLine();
-                    lineCount++;
-                }
-                textParser.close();
-                return fileConcatenated;
+
+            while(textParser.hasNextLine()){
+                fileConcatenated += textParser.nextLine();
             }
+            textParser.close();
+            return fileConcatenated;
+
+        } catch (FileNotFoundException e){
+            System.out.println(e.fillInStackTrace());
+        }
+        return null;
+    }
+
+    public static String readFileString(String file, int lineNumber){
+        String fileConcatenated = "";
+        int lineCount = 0;
+        if(lineNumber == 0){
+            return null;
+        }
+        try {
+            File fileToRead = new File(file);
+            Scanner textParser = new Scanner(fileToRead);
+            while (textParser.hasNextLine() && lineCount < lineNumber ) {
+                fileConcatenated += textParser.nextLine();
+                lineCount++;
+            }
+            textParser.close();
+            return fileConcatenated;
+
         } catch (FileNotFoundException e){
             System.out.println(e.fillInStackTrace());
         }

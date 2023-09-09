@@ -10,6 +10,13 @@ $ cd file-wrapper-mainipulation
 $ mvn package -e -Dmaven.test.skip=true
 ```
 ## Functions
+
+#### .read(String file, [int lineNumber])
+```java
+FileUtils.readFileChar(String file);
+FileUtils.readFileString(String file);
+FileUtils.readFileString(String file, int lineNumber);
+```
 #### .write(String filename, char[]|String|Integer)
 ```java
 FileUtils.write(String fileame,char[] charbuf);
